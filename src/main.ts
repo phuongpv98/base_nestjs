@@ -1,4 +1,4 @@
-import { rateLimitOptions } from './shared/options/rate-limit.options';
+import { rateLimitOptions } from '@shared/options/rate-limit.options';
 // Build-in Node modules
 import { readFileSync, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
@@ -23,10 +23,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { swaggerOptions } from './shared/options/swagger.options';
 
 // API Validation
-import { classValidatorOptions } from './shared/options/class-validator.options';
+import { classValidatorOptions } from '@shared/options/class-validator.options';
 
 // Security
-import * as rateLimit from 'express-rate-limit';
+import rateLimit from 'express-rate-limit';
 import * as helmet from 'helmet';
 // import { AuthGuard } from '@nestjs/passport';
 // import { RolesGuard } from './shared/guards/roles.guard';
@@ -87,7 +87,7 @@ async function bootstrap() {
   SwaggerModule.setup(swaggerOptions.initOnPath, app, document);
 
   // Security
-  app.use(helmet()); // protect app from some vulnerabilities by setting HTTP headers appropriately
+  // app.use(helmet()); // protect app from some vulnerabilities by setting HTTP headers appropriately
   app.use(rateLimit(rateLimitOptions)); // Add a limitation on hit Server
   // app.useGlobalGuards(AuthGuard('jwt'), new RolesGuard());
   // app.use(csurf({ cookie: true })); // Cross-site request forgery: is a type of malicious exploit of a website

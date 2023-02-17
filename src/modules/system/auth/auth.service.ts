@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcryptjs';
 import { IUserJWT } from './interfaces/jwt-user';
 import { MailService } from '../mail/mail.service';
+import {RegisterNewUserDto} from "@src/modules/system/auth/dto/register-new-user.dto";
 @Injectable()
 export class AuthService {
   constructor(
@@ -49,7 +50,7 @@ export class AuthService {
     }
   }
 
-  async register(user: IUser) {
+  async register(user: RegisterNewUserDto) {
     const { password, ...createdUser } = await this.usersService.create(user);
     //send mail
     await this.mailService.sendUserConfirmation(user, "token");

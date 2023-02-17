@@ -5,7 +5,7 @@ FROM node:16-alpine
 WORKDIR /app
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
+COPY package.json ./
 
 # Install app dependencies
 RUN npm config set legacy-peer-deps true
@@ -15,4 +15,3 @@ RUN npm install
 COPY . .
 
 # Creates a "dist" folder with the production build
-RUN npm run build

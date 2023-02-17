@@ -1,6 +1,6 @@
-import { bcryptOptions } from './../../../shared/options/bcrypt.options';
-import { constants } from './../../../shared/constants/constants';
-import { errors } from '../../../shared/exceptions/errors';
+import { bcryptOptions } from '@shared/options/bcrypt.options';
+import { constants } from '@shared/constants/constants';
+import { errors } from '@shared/exceptions/errors';
 import { User } from './classes/user';
 import { IChangePassword } from './../auth/interfaces/change-password';
 import { IUser } from './interfaces/user.interface';
@@ -8,6 +8,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { hash } from 'bcryptjs';
+import { RegisterNewUserDto } from '@src/modules/system/auth/dto/register-new-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -22,8 +23,8 @@ export class UsersService {
     // });
   }
 
-  async create(user: IUser): Promise<User> {
-    return (await this.userModel.create(user))._doc;
+  async create(user: RegisterNewUserDto): Promise<User> {
+    return (await this.userModel.create(user));
     // const { password, roles, ...newUser } = (
     //   await this.userModel.create(user)
     // )._doc;
@@ -93,8 +94,8 @@ export class UsersService {
     return await this.userModel.findOne({ email }).lean();
   }
 
-  getAll(): Promise<User[]> {
-    return this.userModel.find({}).lean();
+  async getAll(): Promise<User[]> {
+    return await(this.userModel.find({})).lean();
   }
 
   async createAdminIfNotExists() {

@@ -1,5 +1,5 @@
-import { DeleteFieldsInterceptor } from './../../../shared/interceptors/delete-fields.interceptor';
-import { RolesGuard } from './../../../shared/guards/roles.guard';
+import { DeleteFieldsInterceptor } from '@shared/interceptors/delete-fields.interceptor';
+import { RolesGuard } from '@shared/guards/roles.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
@@ -16,7 +16,10 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { Roles } from '../../../shared/decorators/roles.decorator';
+import { Roles } from '@shared/decorators/roles.decorator';
+import { ObjectId } from 'mongoose';
+import { IUser } from '@src/modules/system/users/interfaces/user.interface';
+import { RegisterNewUserDto } from '@src/modules/system/auth/dto/register-new-user.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -37,7 +40,7 @@ export class UsersController {
   //   description: 'The record has been successfully created.',
   // })
   // @ApiResponse({ status: 403, description: 'Forbidden.' })
-  create(@Body() createdUserDto: CreateUserDto) {
+  create(@Body() createdUserDto: RegisterNewUserDto) {
     return this.usersService.create(createdUserDto);
   }
 
@@ -57,7 +60,7 @@ export class UsersController {
     summary: 'Get user by id',
     description: 'End-Point for get user by id',
   })
-  getById(@Param('_id') id: string) {
+  getById(@Param('_id') id: ObjectId) {
     return this.usersService.getById(id);
   }
 
@@ -67,7 +70,7 @@ export class UsersController {
     summary: 'Delete user by id',
     description: 'End-Point for delete user by id',
   })
-  delete(@Param('_id') id: string) {
+  delete(@Param('_id') id: ObjectId) {
     return this.usersService.delete(id);
   }
 
@@ -77,7 +80,7 @@ export class UsersController {
     summary: 'Update user by id',
     description: 'End-Point for update user by id',
   })
-  update(@Param('_id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('_id') id: ObjectId, @Body() updateUserDto: IUser) {
     return this.usersService.update(id, updateUserDto);
   }
 }

@@ -12,7 +12,8 @@
     "incremental": true,
     "moduleResolution": "node",
     "paths": {
-      "src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@shared/*": ["src/shared/*"]
     },
     "skipLibCheck": true
   },

@@ -1,5 +1,7 @@
+import { ObjectId } from 'mongoose';
+
 export interface IUserJWT {
-  _id: string;
+  _id: ObjectId;
   email: string;
   roles: [string];
 }

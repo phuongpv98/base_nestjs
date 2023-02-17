@@ -1,7 +1,7 @@
-import { User } from './../../../shared/decorators/user.decorator';
-import { bcryptOptions } from './../../../shared/options/bcrypt.options';
-import { errors } from '../../../shared/exceptions/errors';
-import { DeleteFieldsInterceptor } from './../../../shared/interceptors/delete-fields.interceptor';
+import { User } from '@src/shared/decorators/user.decorator';
+import { bcryptOptions } from '@src/shared/options/bcrypt.options';
+import { errors } from '@src/shared/exceptions/errors';
+import { DeleteFieldsInterceptor } from '@shared/interceptors/delete-fields.interceptor';
 import { RegisterNewUserDto } from './dto/register-new-user.dto';
 import { IUserJWT } from './interfaces/jwt-user';
 import { ChangePasswordDto } from './dto/change-password-dto';
