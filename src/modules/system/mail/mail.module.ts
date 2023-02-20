@@ -4,12 +4,24 @@ import { Global, Module } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { join } from 'path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { SendMailConsumer } from './mail-consumer';
+import { BullModule } from '@nestjs/bull';
 
 @Global() // 👈 global module
 @Module({
   imports: [
+    //redis
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
+    BullModule.registerQueue({
+      name: 'sendMail-queue',
+    }),
     MailerModule.forRootAsync({
-      // imports: [ConfigModule], // import module if not enabled globally
+      //imports: [BullModule], // import module if not enabled globally
       useFactory: async (config: ConfigService) => ({
         // transport: config.get("MAIL_TRANSPORT"),
         // or
@@ -35,7 +47,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }),
   ],
-  providers: [MailService],
+  providers: [MailService, SendMailConsumer],
   exports: [MailService],
 })
 export class MailModule {}
