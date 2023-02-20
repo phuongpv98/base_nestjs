@@ -20,18 +20,18 @@ import { ValidationPipe, Logger } from '@nestjs/common';
 
 // API documentations
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { swaggerOptions } from './shared/options/swagger.options';
+import { swaggerOptions } from '@shared/options/swagger.options';
 
 // API Validation
 import { classValidatorOptions } from '@shared/options/class-validator.options';
 
 // Security
 import rateLimit from 'express-rate-limit';
-import * as helmet from 'helmet';
+import helmet from 'helmet';
 // import { AuthGuard } from '@nestjs/passport';
-// import { RolesGuard } from './shared/guards/roles.guard';
+// import { RolesGuard } from '@shared/guards/roles.guard';
 // import * as csurf from 'csurf';
-// import { CsrfMiddleware } from './shared/middle-wares/csrf.middleware';
+// import { CsrfMiddleware } from '@shared/middle-wares/csrf.middleware';
 
 // Cookies parser
 // import * as cookieParser from 'cookie-parser';
@@ -45,7 +45,7 @@ import * as mongooseUpdateDocumentVersion from 'mongoose-update-document-version
 plugin(mongooseUpdateDocumentVersion);
 
 // Errors handler
-import { AllExceptionsFilter } from './shared/filters/exceptions.filter';
+import { AllExceptionsFilter } from '@shared/filters/exceptions.filter';
 
 import * as compression from 'compression';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -87,7 +87,7 @@ async function bootstrap() {
   SwaggerModule.setup(swaggerOptions.initOnPath, app, document);
 
   // Security
-  // app.use(helmet()); // protect app from some vulnerabilities by setting HTTP headers appropriately
+  app.use(helmet()); // protect app from some vulnerabilities by setting HTTP headers appropriately
   app.use(rateLimit(rateLimitOptions)); // Add a limitation on hit Server
   // app.useGlobalGuards(AuthGuard('jwt'), new RolesGuard());
   // app.use(csurf({ cookie: true })); // Cross-site request forgery: is a type of malicious exploit of a website

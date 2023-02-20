@@ -1,6 +1,6 @@
-import { User } from '@src/shared/decorators/user.decorator';
-import { bcryptOptions } from '@src/shared/options/bcrypt.options';
-import { errors } from '@src/shared/exceptions/errors';
+import { User } from '@shared/decorators/user.decorator';
+import { bcryptOptions } from '@shared/options/bcrypt.options';
+import { errors } from '@shared/exceptions/errors';
 import { DeleteFieldsInterceptor } from '@shared/interceptors/delete-fields.interceptor';
 import { RegisterNewUserDto } from './dto/register-new-user.dto';
 import { IUserJWT } from './interfaces/jwt-user';
@@ -18,12 +18,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { hash } from 'bcryptjs';
+import { CronService } from '../cron/cron.service';
 
 @ApiTags('Auth')
 @Controller('auth')
 @UseInterceptors(new DeleteFieldsInterceptor('password'))
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService, private readonly cronService: CronService) {}
 
   // @UseGuards(AuthGuard('local'))
   @Post('login')
@@ -32,6 +33,7 @@ export class AuthController {
     description: 'End-Point for login user',
   })
   login(@Body() userLogin: UserLoginDto) {
+    // this.cronService.runEvery10Seconds()
     return this.authService.login(userLogin);
   }
 

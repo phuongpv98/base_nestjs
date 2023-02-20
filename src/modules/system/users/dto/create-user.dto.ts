@@ -1,4 +1,4 @@
-import { BaseDtoClass } from './../../../../shared/base/dto/base-dto.class';
+import { BaseDtoClass } from '@shared/base/dto/base-dto.class';
 import { UserRoles } from './../enum/roles.enums';
 import { ApiProperty } from '@nestjs/swagger';
 import {

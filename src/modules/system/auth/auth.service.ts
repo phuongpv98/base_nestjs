@@ -1,5 +1,5 @@
-import { bcryptOptions } from './../../../shared/options/bcrypt.options';
-import { errors } from '../../../shared/exceptions/errors';
+import { bcryptOptions } from '@shared/options/bcrypt.options';
+import { errors } from '@shared/exceptions/errors';
 import { ChangePasswordDto } from './dto/change-password-dto';
 import { ObjectId } from 'mongoose';
 import { IUser } from './../users/interfaces/user.interface';
@@ -15,7 +15,7 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
-    private mailService: MailService
+    private mailService: MailService    
   ) {}
 
   async validateUser(username: string, pass: string) {

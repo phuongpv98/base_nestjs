@@ -1,4 +1,4 @@
-import { jwtOptions } from './../../../../shared/options/jwt.options';
+import { jwtOptions } from '@shared/options/jwt.options';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';

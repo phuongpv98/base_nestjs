@@ -19,6 +19,7 @@ plugin(timestamps);
 
 // Inject soft-delete in all mongoose schemas
 import * as mongooseDelete from 'mongoose-delete';
+import { ScheduleModule } from '@nestjs/schedule';
 plugin(mongooseDelete, { deletedAt: true });
 
 @Module({
@@ -35,7 +36,7 @@ plugin(mongooseDelete, { deletedAt: true });
     ServeStaticModule.forRoot({
       rootPath: join('.', 'public'),
     }),
-
+    ScheduleModule.forRoot(),
     /* App Modules */
     AuthModule,
     UsersModule,
