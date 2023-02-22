@@ -4,7 +4,7 @@ import { errors } from '@shared/exceptions/errors';
 import { User } from './classes/user';
 import { IChangePassword } from './../auth/interfaces/change-password';
 import { IUser } from './interfaces/user.interface';
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { hash } from 'bcryptjs';
@@ -24,11 +24,12 @@ export class UsersService {
   }
 
   async create(user: RegisterNewUserDto): Promise<User> {
-    return (await this.userModel.create(user));
-    // const { password, roles, ...newUser } = (
-    //   await this.userModel.create(user)
-    // )._doc;
-    // return newUser;
+    try {
+      return (await this.userModel.create(user))._doc();
+    } catch (err) {
+      throw new HttpException(`Callback getUser ${err.message}`, 400);
+    }
+
   }
 
   async update(id: ObjectId, user: IUser): Promise<User> {
