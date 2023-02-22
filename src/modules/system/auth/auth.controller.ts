@@ -19,6 +19,7 @@ import {
 } from '@nestjs/common';
 import { hash } from 'bcryptjs';
 import { CronService } from '../cron/cron.service';
+import { I18n, I18nContext } from 'nestjs-i18n';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -32,8 +33,9 @@ export class AuthController {
     summary: 'Login user',
     description: 'End-Point for login user',
   })
-  login(@Body() userLogin: UserLoginDto) {
+  async login(@Body() userLogin: UserLoginDto, @I18n() i18n: I18nContext) {
     // this.cronService.runEvery10Seconds()
+    console.log(await i18n.t('test.HELLO'));
     return this.authService.login(userLogin);
   }
 

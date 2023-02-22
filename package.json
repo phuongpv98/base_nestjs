@@ -52,6 +52,7 @@
     "mongoose-timestamp": "^0.6.0",
     "mongoose-update-document-version": "^1.0.2",
     "nestjs-crud-mongoose": "^1.1.1",
+    "nestjs-i18n": "^10.2.6",
     "nodemailer": "^6.9.1",
     "npm-check-updates": "^16.7.4",
     "passport": "^0.6.0",

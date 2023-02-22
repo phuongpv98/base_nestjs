@@ -20,6 +20,10 @@ plugin(timestamps);
 // Inject soft-delete in all mongoose schemas
 import * as mongooseDelete from 'mongoose-delete';
 import { ScheduleModule } from '@nestjs/schedule';
+import { I18nModule } from 'nestjs-i18n';
+import { QueryResolver } from 'nestjs-i18n/dist/resolvers/query.resolver';
+import { AcceptLanguageResolver } from 'nestjs-i18n/dist/resolvers/accept-language.resolver';
+import path = require('path');
 plugin(mongooseDelete, { deletedAt: true });
 
 @Module({
@@ -40,6 +44,17 @@ plugin(mongooseDelete, { deletedAt: true });
     /* App Modules */
     AuthModule,
     UsersModule,
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loaderOptions: {
+        path: path.join(__dirname, '../shared/i18n/'),
+        watch: true,
+      },
+      resolvers: [
+        { use: QueryResolver, options: ['lang'] },
+        AcceptLanguageResolver,
+      ],
+    }),
   ],
   controllers: [],
   providers: [],
